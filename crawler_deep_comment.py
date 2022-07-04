@@ -40,3 +40,4 @@ def CrawlerDeepComment(fileName, aid):
             print("Exception wait")
             time.sleep(20)
             continue
+    saveFile.close()

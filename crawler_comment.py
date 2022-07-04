@@ -3,12 +3,8 @@ import urllib.request
 import common
 import random
 
-# 抓取主要评论(不含跟评)
-# fileName 保存的文件名
-# aid varticle 文章Id
-# size  评论条数
 def CrawlerComment(fileName,aid,size):
-    saveFile = open("./data/comment_"+fileName+".txt","w",encoding='utf-8')
+    saveFile = open("./data/comment_"+fileName+".txt","w")
     pageSize = "10"
     lastId = "0"
     count = 0
@@ -29,9 +25,13 @@ def CrawlerComment(fileName,aid,size):
             for item in list:
                 count += 1
                 content = str(item).replace("\n", "").replace("\r", "")
-                print("第" + str(count) + "评论 " + content )
+                print("at" + str(count) + " comment " + content )
 
                 saveFile.write(content + "\n")
+            print("lastId ===> " + lastId)
+            if lastId == "":
+                print("lastId empty")
+                break
             if size == count:
                 print("done")
                 break
@@ -41,3 +41,4 @@ def CrawlerComment(fileName,aid,size):
             print("Exception wait")
             time.sleep(20)
             continue
+    saveFile.close()

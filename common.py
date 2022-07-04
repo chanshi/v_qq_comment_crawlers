@@ -1,5 +1,6 @@
 import json
 import re
+import datetime
 
 userAgent =\
     [
@@ -13,7 +14,7 @@ userAgent =\
     ]
 
 
-def VQQCommentUrl(aid,lastId,pageSize):
+def VQQCommentUrl(aid , lastId , pageSize ) :
     return "https://video.coral.qq.com/varticle/" + aid + "/comment/v2?callback=_varticle" + aid + "commentv2&orinum=" + pageSize + "&oriorder=o&pageflag=1&cursor=" + lastId + "&scorecursor=0&orirepnum=2&reporder=o&reppageflag=1&source=132"
 
 def ParseCommentBody( body):
@@ -25,12 +26,15 @@ def ParseCommentBody( body):
     for con in res["data"]["oriCommList"]:
         # print(con)
         if con["parent"] == "0":
-            data.append(con["content"])
+            tm = datetime.datetime.fromtimestamp( float(con["time"]) ).strftime("%Y-%m-%d")
+
+            data.append(tm+" "+ con["content"])
 
     return data, res["data"]["last"]
 
 def VQQDeepCommentUrl(videoId,lastId,pageSize):
     return "https://video.coral.qq.com/filmreviewr/c/upcomment/"+videoId+"?callback=_filmreviewrcupcomment"+videoId+"&reqnum="+pageSize+"&source=132&commentid="+lastId
+
 
 def ParseDeepCommentBody(body):
     raw = re.compile('\({(.*?)}\)', re.S).findall(body)[0]

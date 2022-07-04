@@ -7,6 +7,10 @@
 # aid varticle 文章Id
 # size  评论条数
 CrawlerComment("fileName","aid",1000)
+
+```
+```shell
+python3 crawler.py -t 7671504962 -s 20000
 ```
 
 2. 抓取深度评论
